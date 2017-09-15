@@ -7,10 +7,11 @@ m1 = 0.25     # Mass of the pendulum, kg
 m2 = 1.0      # Mass of the cart, kg
 g = 9.8       # Gravity, m/s**2
 b = 0.05      # Damping coefficient, Ns
-length = 1
+length =.2
+width= .2
 
 # parameters for animation
-w = 0.5       # Width of the cart, m
+w = 0.15       # Width of the cart, m
 h = 0.15      # Height of the cart, m
 gap = 0.005   # Gap between the cart and x-axis
 radius = 0.06 # Radius of circular part of pendulum

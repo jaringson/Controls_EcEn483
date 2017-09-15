@@ -14,10 +14,9 @@ class ballbeamAnimation:
         self.handle = []                      # Initializes a list object that will
                                               # be used to contain handles to the
                                               # patches and line objects.
-        self.length=B.length
 
-        plt.axis([-3*B.ell,3*B.ell, -0.1, 3*B.ell]) # Change the x,y axis limits
-        plt.plot([-2*B.ell,2*B.ell],[0,0],'b--')    # Draw a base line
+        plt.axis([-2*B.length,2*B.length, -0.1, 2*B.length]) # Change the x,y axis limits
+        plt.plot([-2*B.length,2*B.length],[0,0],'b--')    # Draw a base line
         plt.xlabel('z')
 
         
@@ -31,7 +30,7 @@ class ballbeamAnimation:
 
 
         self.drawBeam(z,theta)
-        # self.drawBall()
+        self.drawBall(z,theta)
 
         self.ax.axis('equal') # This will cause the image to not distort
 
@@ -41,8 +40,8 @@ class ballbeamAnimation:
 
     def drawBeam(self, z, theta):
         
-        X = [0, self.length*np.cos(theta)]  # X data points
-        Y = [0, self.length*np.sin(theta)]  # Y data points
+        X = [0, B.length*np.cos(theta)]  # X data points
+        Y = [0, B.length*np.sin(theta)]  # Y data points
 
         # When the class is initialized, a line object will be
         # created and added to the axes. After initialization, the
@@ -52,7 +51,6 @@ class ballbeamAnimation:
             # to the handle list.
             line, =self.ax.plot(X, Y, lw=5, c='blue')
             self.handle.append(line)
-            self.flagInit=False
         else:
             self.handle[0].set_xdata(X)   # Update the line
             self.handle[0].set_ydata(Y)
@@ -60,12 +58,22 @@ class ballbeamAnimation:
     def drawBall(self,z,theta):
 
 
-        if self.flagInit:
-            self.handle.append(mpatches.Rectangle((-.80,0),
-                    .05,1, fc = 'blue', ec = 'black'))
-            self.ax.add_patch(self.handle[1]) # Add the patch to the axes
+        x = z*np.cos(theta) -  (B.radius+.035)*np.sin(theta)        # x coordinate
+        y = z*np.sin(theta) +  (B.radius+.035)*np.cos(theta)       # y coordinate
+        xy = (x,y)                                   # Center of circle
+
+        # When the class is initialized, a CirclePolygon patch object will
+        # be created and added to the axes. After initialization, the
+        # CirclePolygon patch object will only be updated.
+        if self.flagInit == True:
+            # Create the CirclePolygon patch and append its handle
+            # to the handle list
+            self.handle.append(mpatches.CirclePolygon(xy,
+                radius = B.radius, resolution = 15,
+                fc = 'limegreen', ec = 'black'))
+            self.ax.add_patch(self.handle[1])  # Add the patch to the axes
         else:
-            self.ax.add_patch(self.handle[1])
+            self.handle[1]._xy=xy
 
 
 
