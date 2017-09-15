@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sys
 sys.path.append('..')  # add parent directory
-import ballbeamParam as V
+import vtolParam as V
 from signalGenerator import signalGenerator
 from vtolAnimation import vtolAnimation
 from plotData import plotData
