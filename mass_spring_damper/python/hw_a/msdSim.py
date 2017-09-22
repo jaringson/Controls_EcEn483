@@ -10,8 +10,7 @@ from plotData import plotData
 
 # instantiate reference input classes
 reference = signalGenerator(amplitude=0.5, frequency=0.1)
-zRef = signalGenerator(amplitude=0.5, frequency=0.1)
-thetaRef = signalGenerator(amplitude=2.0*np.pi, frequency=0.1)
+zRef = signalGenerator(amplitude=0.5, frequency=0.3)
 fRef = signalGenerator(amplitude=5, frequency=.5)
 
 # instantiate the simulation plots and animation
@@ -23,10 +22,9 @@ while t < S.t_end:  # main simulation loop
     # set variables
     r = reference.square(t)
     z = zRef.sin(t)
-    theta = thetaRef.sin(t)
     f = fRef.sawtooth(t)
     # update animation
-    state = [z[0], theta[0], 0.0, 0.0]
+    state = [z[0], 0.0, 0.0]
     animation.drawMSD(state)
     dataPlot.updatePlots(t, r, state, f)
 

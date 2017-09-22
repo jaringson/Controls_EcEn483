@@ -12,7 +12,7 @@ class plotData:
 
     def __init__(self):
         # Number of subplots = num_of_rows*num_of_cols
-        self.num_rows = 3    # Number of subplot rows
+        self.num_rows = 2    # Number of subplot rows
         self.num_cols = 1    # Number of subplot columns
 
         # Crete figure and axes handles
@@ -27,9 +27,8 @@ class plotData:
 
         # create a handle for every subplot.
         self.handle = []
-        self.handle.append(myPlot(self.ax[0], ylabel='z(m)', title='Pendulum Data'))
-        self.handle.append(myPlot(self.ax[1], ylabel='theta(deg)'))
-        self.handle.append(myPlot(self.ax[2], xlabel='t(s)', ylabel='force(N)'))
+        self.handle.append(myPlot(self.ax[0], ylabel='z(m)', title='Mass Spring Damper Data'))
+        self.handle.append(myPlot(self.ax[1], xlabel='t(s)', ylabel='force(N)'))
 
     def updatePlots(self, t, reference, states, ctrl):
         '''
@@ -39,13 +38,11 @@ class plotData:
         self.time_history.append(t)  # time
         self.zref_history.append(reference[0])  # reference base position
         self.z_history.append(states[0])  # base position
-        self.theta_history.append(180.0/np.pi*states[1])  # rod angle (converted to degrees)
         self.Force_history.append(ctrl[0])  # force on the base
 
         # update the plots with associated histories
         self.handle[0].updatePlot(self.time_history, [self.z_history, self.zref_history])
-        self.handle[1].updatePlot(self.time_history, [self.theta_history])
-        self.handle[2].updatePlot(self.time_history, [self.Force_history])
+        self.handle[1].updatePlot(self.time_history, [self.Force_history])
 
 
 class myPlot:

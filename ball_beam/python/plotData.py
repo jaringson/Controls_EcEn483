@@ -27,7 +27,7 @@ class plotData:
 
         # create a handle for every subplot.
         self.handle = []
-        self.handle.append(myPlot(self.ax[0], ylabel='z(m)', title='Pendulum Data'))
+        self.handle.append(myPlot(self.ax[0], ylabel='z(m)', title='Ball Beam Data'))
         self.handle.append(myPlot(self.ax[1], ylabel='theta(deg)'))
         self.handle.append(myPlot(self.ax[2], xlabel='t(s)', ylabel='force(N)'))
 

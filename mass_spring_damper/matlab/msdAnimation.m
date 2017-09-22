@@ -5,8 +5,8 @@ classdef msdAnimation
     %--------------------------------
     properties
         base_handle
-        rod_handle
-        bob_handle
+        damper_handle
+        spring_handle
         ell
         width
         height
@@ -21,16 +21,16 @@ classdef msdAnimation
             self.width = P.w;
             self.height = P.h;
             self.gap = P.gap;
-            self.radius = P.radius;
             
             figure(1), clf
             plot([-2*self.ell, 2*self.ell],[0,0],'k'); % draw track
             hold on
-            plot([-2*self.ell, 2*self.ell],[0,0],'k'); % draw track
+            plot([-2,0],[-2*self.ell, 2*self.ell],'k'); % draw wall
+            
             % initialize the base, rod, and bob to initial conditions
             self=self.drawBase(P.z0);
-            self=self.drawRod(P.z0);
-            self=self.drawBob(P.z0);
+            self=self.drawSpring(P.z0);
+            self=self.drawDamper(P.z0);
             axis([-3*self.ell, 3*self.ell, -0.1, 3*self.ell]); % Change the x,y axis limits
             xlabel('z'); % label x-axis
         end
@@ -40,7 +40,6 @@ classdef msdAnimation
             % drawCart, drawCircle, and drawRod to create the animation.
             % x is the system state
             z= x(1);        % Horizontal position of cart, m
-            theta = x(2);   % Angle of pendulum, rads
 
             self=self.drawBase(z);
             self=self.drawDamper(z);
@@ -63,21 +62,21 @@ classdef msdAnimation
             end
         end
         %---------------------------
-        function self=drawDamper(self, z, theta)
+        function self=drawDamper(self, z)
             X = [z, z+self.ell*sin(theta)]; % X data points
             Y = [...
                 self.gap+self.height,...
                 self.gap + self.height + self.ell*cos(theta)...
                 ]; % Y data points
 
-            if isempty(self.rod_handle)
-                self.rod_handle = plot(X, Y, 'k');
+            if isempty(self.damper_handle)
+                self.damper_handle = plot(X, Y, 'k');
             else
-                set(self.rod_handle,'XData', X, 'YData', Y);
+                set(self.damper_handle,'XData', X, 'YData', Y);
             end
         end
         %---------------------------
-        function self=drawSpring(self, z, theta)
+        function self=drawSpring(self, z)
             th = 0:2*pi/10:2*pi;
             center = [...
                 z + (self.ell+self.radius)*sin(theta),...
@@ -85,11 +84,11 @@ classdef msdAnimation
                 ];
             pts = center + [self.radius*cos(th)', self.radius*sin(th)'];
 
-            if isempty(self.bob_handle)
-                self.bob_handle = fill(pts(:,1),pts(:,2),'g');
+            if isempty(self.spring_handle)
+                self.spring_handle = fill(pts(:,1),pts(:,2),'g');
             else
-                set(self.bob_handle,'XData',pts(:,1));
-                set(self.bob_handle,'YData',pts(:,2));
+                set(self.spring_handle,'XData',pts(:,1));
+                set(self.spring_handle,'YData',pts(:,2));
             end
         end 
     end
