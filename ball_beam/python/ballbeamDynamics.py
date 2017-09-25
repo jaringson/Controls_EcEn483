@@ -1,18 +1,19 @@
 import numpy as np 
 import random
-import msdParam as S
+import ballbeamParam as B
 
 
-class msdDynamics:
+class ballbeamDynamics:
     '''
         Model the physical system
     '''
 
     def __init__(self):
         # Initial state conditions
-        self.state = np.matrix([[S.z0],          # z initial position
-                                [S.zdot0]])       # zdot initial velocity
-                                 
+        self.state = np.matrix([[B.z0],          # z initial position
+                                [B.theta0],      # Theta initial orientation
+                                [B.zdot0],       # zdot initial velocity
+                                [B.thetadot0]])  # Thetadot initial velocity
         #################################################
         # The parameters for any physical system are never known exactly.  Feedback
         # systems need to be designed to be robust to this uncertainty.  In the simulation
@@ -21,25 +22,25 @@ class msdDynamics:
         # may change by up to 20%.  A different parameter value is chosen every time the simulation
         # is run.
         alpha = 0.2  # Uncertainty parameter
-        self.m = S.m * (1+2*alpha*np.random.rand()-alpha)  # Mass of the cart, kg
-        #self.m2 = S.m2 * (1+2*alpha*np.random.rand()-alpha)  # Mass of the cart, kg
-        self.ell = S.ell * (1+2*alpha*np.random.rand()-alpha)  # Length of the rod, m
-        self.b = S.b * (1+2*alpha*np.random.rand()-alpha)  # Damping coefficient, Ns
-        self.g = S.g  # the gravity constant is well known and so we don't change it.
-        self.k = S.k * (1+2*alpha*np.random.rand()-alpha) # K spring constant 
+        self.m1 = B.m1 #* (1+2*alpha*np.random.rand()-alpha)  # Mass of the pendulum, kg
+        self.m2 = B.m2 #* (1+2*alpha*np.random.rand()-alpha)  # Mass of the cart, kg
+        self.l = B.l #* (1+2*alpha*np.random.rand()-alpha)  # Length of the rod, m
+        self.g = B.g  # the gravity constant is well known and so we don't change it.
 
     def propagateDynamics(self, u):
         '''
             Integrate the differential equations defining dynamics
-            P.Ts is the time step between function calls.
+            B.Ts is the time step between function calls.
             u contains the system input(s).
         '''
         # Integrate ODE using Runge-Kutta RK4 algorithm
         k1 = self.derivatives(self.state, u)
-        k2 = self.derivatives(self.state + S.Ts/2*k1, u)
-        k3 = self.derivatives(self.state + S.Ts/2*k2, u)
-        k4 = self.derivatives(self.state + S.Ts*k3, u)
-        self.state += S.Ts/6 * (k1 + 2*k2 + 2*k3 + k4)
+        k2 = self.derivatives(self.state + B.Ts/2*k1, u)
+        k3 = self.derivatives(self.state + B.Ts/2*k2, u)
+        k4 = self.derivatives(self.state + B.Ts*k3, u)
+        self.state += B.Ts/6 * (k1 + 2*k2 + 2*k3 + k4)
+        if self.state[0] > B.l:
+            self.state[0] =  B.l
 
     def derivatives(self, state, u):
         '''
@@ -47,14 +48,22 @@ class msdDynamics:
         '''
         # re-label states and inputs for readability
         z = state.item(0)
-        zdot = state.item(1)
-
+        theta = state.item(1)
+        zdot = state.item(2)
+        thetadot = state.item(3)
         F = u[0]
         # The equations of motion.
-        zddot = (1/self.m)*(F-self.b*zdot-self.k*z)
 
+        M = np.matrix([[1, 0],
+                       [0, 1]])
+        C = np.matrix([[(self.m1*thetadot**2*z-self.m1*self.g*np.sin(theta))/(self.m1)],
+                       [(F*self.l*np.cos(theta)-thetadot*2*self.m1*zdot*z-self.m1*self.g*z*np.cos(theta)-self.m2*self.g*(self.l/2)*np.cos(theta))/(self.m1*z**2+(1/3)*self.m2*self.l**2)]])
+        
+        tmp = np.linalg.inv(M)*C
+        zddot = tmp.item(0)
+        thetaddot = tmp.item(1)
         # build xdot and return
-        xdot = np.matrix([[zdot], [zddot]])
+        xdot = np.matrix([[zdot], [thetadot], [zddot], [thetaddot]])
         return xdot
 
     def outputs(self):

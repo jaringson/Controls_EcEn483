@@ -3,21 +3,17 @@ import numpy as np
 import control as cnt
 
 # Physical parameters of the inverted pendulum known to the controller
-m1 = 0.25     # Mass of the pendulum, kg
-m2 = 1.0      # Mass of the cart, kg
+m1 = 0.35     # Mass of the ball, kg
+m2 = 2.0      # Mass of the beam, kg
 g = 9.8       # Gravity, m/s**2
-b = 0.05      # Damping coefficient, Ns
-length = 1
+l = 0.5  # Length of beam m
 
 # parameters for animation
-w = 0.5       # Width of the cart, m
-h = 0.15      # Height of the cart, m
-gap = 0.005   # Gap between the cart and x-axis
 radius = 0.06 # Radius of circular part of pendulum
 
 # Initial Conditions
-z0 = 0.0                # ,m
-theta0 = 0.0*np.pi/180  # ,rads
+z0 = 0.25                # ,m
+theta0 = 20*np.pi/180  # ,rads
 zdot0 = 0.0             # ,m/s
 thetadot0 = 0.0         # ,rads/s
 

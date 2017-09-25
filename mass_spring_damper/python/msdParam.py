@@ -3,17 +3,16 @@ import numpy as np
 import control as cnt
 
 # Physical parameters of the inverted pendulum known to the controller
-m1 = 0.25     # Mass of the pendulum, kg
-m2 = 1.0      # Mass of the cart, kg
-ell = 0.5    # Length of the rod, m
+m = 5     # Mass of the cart, kg
+ell = 0.5    # Length of the interest, m
 g = 9.8       # Gravity, m/s**2
-b = 0.05      # Damping coefficient, Ns
+k = 3		# Spring Constant N/m 
+b = 0.5      # Damping coefficient, Ns
 
 # parameters for animation
 w = 0.5       # Width of the cart, m
 h = 0.15      # Height of the cart, m
 gap = 0.005   # Gap between the cart and x-axis
-radius = 0.06 # Radius of circular part of pendulum
 
 # Initial Conditions
 z0 = 0.0                # ,m

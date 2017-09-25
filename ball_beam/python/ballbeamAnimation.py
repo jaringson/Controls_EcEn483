@@ -15,8 +15,8 @@ class ballbeamAnimation:
                                               # be used to contain handles to the
                                               # patches and line objects.
 
-        plt.axis([-2*B.length,2*B.length, -0.1, 2*B.length]) # Change the x,y axis limits
-        plt.plot([-2*B.length,2*B.length],[0,0],'b--')    # Draw a base line
+        plt.axis([-2*B.l,2*B.l, -0.1, 2*B.l]) # Change the x,y axis limits
+        plt.plot([-2*B.l,2*B.l],[0,0],'b--')    # Draw a base line
         plt.xlabel('z')
 
         
@@ -40,8 +40,8 @@ class ballbeamAnimation:
 
     def drawBeam(self, z, theta):
         
-        X = [0, B.length*np.cos(theta)]  # X data points
-        Y = [0, B.length*np.sin(theta)]  # Y data points
+        X = [0, B.l*np.cos(theta)]  # X data points
+        Y = [0, B.l*np.sin(theta)]  # Y data points
 
         # When the class is initialized, a line object will be
         # created and added to the axes. After initialization, the

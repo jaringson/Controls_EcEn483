@@ -12,7 +12,7 @@ class plotData:
 
     def __init__(self):
         # Number of subplots = num_of_rows*num_of_cols
-        self.num_rows = 5    # Number of subplot rows
+        self.num_rows = 6    # Number of subplot rows
         self.num_cols = 1    # Number of subplot columns
 
         # Crete figure and axes handles
@@ -25,7 +25,8 @@ class plotData:
         self.h_history = []  # position h
         self.zt_history = []  # position zt
         self.theta_history = []  # angle theta
-        self.Force_history = []  # control force
+        self.ForceR_history = []  # control force
+        self.ForceL_history = []  # control force
 
         # create a handle for every subplot.
         self.handle = []
@@ -33,7 +34,8 @@ class plotData:
         self.handle.append(myPlot(self.ax[1], ylabel='h(m)'))
         self.handle.append(myPlot(self.ax[2], ylabel='theta(deg)'))
         self.handle.append(myPlot(self.ax[3], ylabel='zt(m)'))
-        self.handle.append(myPlot(self.ax[4], xlabel='t(s)', ylabel='force(N)'))
+        self.handle.append(myPlot(self.ax[4], ylabel='force right(N)'))
+        self.handle.append(myPlot(self.ax[5], xlabel='t(s)', ylabel='force left(N)'))
 
     def updatePlots(self, t, reference, states, ctrl):
         '''
@@ -46,14 +48,16 @@ class plotData:
         self.h_history.append(states[1])
         self.theta_history.append(180.0/np.pi*states[2])  # rod angle (converted to degrees)
         self.zt_history.append(states[3])
-        self.Force_history.append(ctrl[0])  # force on the base
+        self.ForceR_history.append(ctrl[0])  # force on the base
+        self.ForceL_history.append(ctrl[1])  # force on the base
 
         # update the plots with associated histories
         self.handle[0].updatePlot(self.time_history, [self.z_history, self.zref_history])
         self.handle[1].updatePlot(self.time_history, [self.h_history])
         self.handle[2].updatePlot(self.time_history, [self.theta_history])
         self.handle[3].updatePlot(self.time_history, [self.zt_history])
-        self.handle[4].updatePlot(self.time_history, [self.Force_history])
+        self.handle[4].updatePlot(self.time_history, [self.ForceR_history])
+        self.handle[5].updatePlot(self.time_history, [self.ForceL_history])
 
 
 class myPlot:

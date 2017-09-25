@@ -30,7 +30,7 @@ class vtolAnimation:
         z = u[0]        # Horizontal position of cart, m
         h = u[1]
         theta = u[2]   # Angle of pendulum, rads
-        zt = u[3]
+        zt = u[6]
 
 
         self.drawBody(z,h,theta)

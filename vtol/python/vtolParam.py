@@ -3,12 +3,16 @@ import numpy as np
 import control as cnt
 
 # Physical parameters of the inverted pendulum known to the controller
-m1 = 0.25     # Mass of the pendulum, kg
-m2 = 1.0      # Mass of the cart, kg
+mr = 0.25     # Mass of the right prop, kg
+ml = 0.25      # Mass of the left prop, kg
+m = 0.25 		# Mass if left and right prop equal, kg
 g = 9.8       # Gravity, m/s**2
-b = 0.05      # Damping coefficient, Ns
-length =.2
-width= .2
+mu = 0.1      # Viscous drag, kg/s
+length = .2	
+width = .2
+Jc = .0042 	# Inertia kg m**2
+d = 0.3      # Distance from vtol body to props, m
+mc = 1 		# mass of the vtol body, kg
 
 # parameters for animation
 w = 0.15       # Width of the cart, m
@@ -18,9 +22,12 @@ radius = 0.06 # Radius of circular part of pendulum
 
 # Initial Conditions
 z0 = 0.0                # ,m
+h0 = 0.0				# ,m
 theta0 = 0.0*np.pi/180  # ,rads
 zdot0 = 0.0             # ,m/s
+hdot0 = 0.0				# ,m/s
 thetadot0 = 0.0         # ,rads/s
+zt0 = 0.0				# ,m
 
 # Simulation Parameters
 t_start = 0.0  # Start time of simulation

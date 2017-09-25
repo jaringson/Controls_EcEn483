@@ -32,7 +32,7 @@ while t < V.t_end:  # main simulation loop
     theta = thetaRef.sin(t)
     f = fRef.sawtooth(t)
     # update animation
-    state = [z[0], h[0], theta[0], zt[0]]
+    state = [z[0], h[0], theta[0], 0.0, 0.0, 0.0, zt[0]]
     animation.drawVtol(state)
     dataPlot.updatePlots(t, r, state, f)
 
