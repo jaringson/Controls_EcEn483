@@ -67,8 +67,8 @@ class vtolDynamics:
         M = np.matrix([[1, 0, 0],
                        [0, 1, 0],
                        [0, 0, 1]])
-        C = np.matrix([[(-Fr*np.sin(theta)-Fl*np.sin(theta)-self.mu*zdot)/(3*self.m)],
-                       [(Fr*np.cos(theta)+Fl*np.cos(theta)-self.mc*self.g+2*self.m*self.g)/(3*self.m)],
+        C = np.matrix([[(-Fr*np.sin(theta)-Fl*np.sin(theta)-self.mu*zdot)/(2*self.m+self.mc)],
+                       [(Fr*np.cos(theta)+Fl*np.cos(theta)-self.mc*self.g+2*self.m*self.g)/(2*self.m+self.mc)],
                        [(Fr*self.d-Fl*self.d)/(2*self.m*self.d**2+self.Jc)]])
         
         tmp = np.linalg.inv(M)*C
