@@ -27,7 +27,7 @@ class msdAnimation:
         z = u[0]        # Horizontal position of cart, m
 
         self.drawCart(z)
-        self.drawBlock()
+        #self.drawBlock()
 
         self.ax.axis('equal') # This will cause the image to not distort
 

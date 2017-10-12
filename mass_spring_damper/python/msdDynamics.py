@@ -64,12 +64,12 @@ class msdDynamics:
         '''
         # re-label states for readability
         z = self.state.item(0)
-        theta = self.state.item(1)
+        #theta = self.state.item(1)
         # add Gaussian noise to outputs
         z_m = z + random.gauss(0, 0.01)
-        theta_m = theta + random.gauss(0, 0.001)
+        #theta_m = theta + random.gauss(0, 0.001)
         # return measured outputs
-        return [z_m, theta_m]
+        return [z_m]
 
     def states(self):
         '''
