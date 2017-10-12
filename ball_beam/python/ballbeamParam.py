@@ -12,8 +12,8 @@ l = 0.5  # Length of beam m
 radius = 0.06 # Radius of circular part of pendulum
 
 # Initial Conditions
-z0 = 0.25                # ,m
-theta0 = 20*np.pi/180  # ,rads
+z0 = 0.1                # ,m
+theta0 = 0.6*np.pi/180  # ,rads
 zdot0 = 0.0             # ,m/s
 thetadot0 = 0.0         # ,rads/s
 
@@ -24,5 +24,5 @@ Ts = 0.01  # sample time for simulation
 t_plot = 0.1  # the plotting and animation is updated at this rate
 
 # saturation limits
-F_max = 5.0                # Max Force, N
+F_max = 100.0                # Max Force, N
 
