@@ -10,12 +10,18 @@ from signalGenerator import signalGenerator
 from vtolAnimation import vtolAnimation
 from plotData import plotData
 
+
+def saturate_F(u, limit):
+    if abs(u) > limit:
+        u = limit*np.sign(u)
+    return u
+
 # instantiate vtol, controller, and reference classes
 vtol = vtolDynamics()
 ctrl_lat = vtolController_lat()
 ctrl_long = vtolController_long()
-reference_h = signalGenerator(amplitude=.5, frequency=.01, y_offset = 2.0)
-reference_z = signalGenerator(amplitude=2.5, frequency=.08, y_offset = 3)
+reference_h = signalGenerator(amplitude=0.01, frequency=.01, y_offset = 3)
+reference_z = signalGenerator(amplitude=2.5, frequency=.08, y_offset = 3.0)
 
 # instantiate the simulation plots and animation
 dataPlot = plotData()
@@ -30,10 +36,12 @@ while t < P.t_end:  # main simulation loop
     t_next_plot = t + P.t_plot
     while t < t_next_plot: # updates control and dynamics at faster simulation rate
         u_tau = ctrl_lat.u(ref_input_z, vtol.states())  # Calculate the control value
-        #u_F = ctrl_long.u(ref_input_h, vtol.states())  # Calculate the control value
-        u_F = [(2*P.m+P.mc)*P.g]
-        Fr = (u_F[0]/2.0) + ((1.0 / (2*P.d)) * u_tau[0])
-        Fl = (u_F[0]/2.0) - ((1.0 / (2*P.d)) * u_tau[0])
+        u_F = ctrl_long.u(ref_input_h, vtol.states())  # Calculate the control value
+        #u_F = [(2*P.m+P.mc)*P.g] 
+        Fr = (u_F[0]/2.0) + ((1.0 / (2*P.d)) * u_tau[0]) 
+        Fl = (u_F[0]/2.0) - ((1.0 / (2*P.d)) * u_tau[0]) 
+        Fr = saturate_F(Fr, 10)
+        Fl = saturate_F(Fl, 10)
         vtol.propagateDynamics([Fr,Fl])  # Propagate the dynamics
         t = t + P.Ts  # advance time by Ts
     # update animation and data plots

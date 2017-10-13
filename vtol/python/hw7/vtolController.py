@@ -25,7 +25,7 @@ class vtolController:
         F_tilde = self.hCtrl.PD(h_r, h, False)
         # compute total force
         F = F_e + F_tilde
-        F = self.saturate(F/2.0)
+        F = self.saturate(F)
         return [F]
 
     def saturate(self, u):

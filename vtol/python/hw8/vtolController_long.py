@@ -17,16 +17,14 @@ class vtolController_long:
         # y_r is the referenced input
         # y is the current state
         h_r = y_r[0]
-        h = y[0]
+        h = y[1]
 
         # compute equilibrium force F_e
         F_e = (P0.mc + P0.mr + P0.ml) * P0.g
-        print F_e
         # compute the linearized force using PD
         F_tilde = self.hCtrl.PD(h_r, h, False)
         # compute total force
         F = F_e + F_tilde
-        print F
         F = self.saturate(F)
         return [F]
 
@@ -34,6 +32,7 @@ class vtolController_long:
         if abs(u) > self.limit:
             u = self.limit*np.sign(u)
         return u
+
 
 
 

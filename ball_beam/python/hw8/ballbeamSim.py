@@ -11,7 +11,7 @@ from plotData import plotData
 # instantiate ballbeam, controller, and reference classes
 ballbeam = ballbeamDynamics()
 ctrl = ballbeamController()
-reference = signalGenerator(amplitude=0.01, frequency=0.01, y_offset= 0.25)
+reference = signalGenerator(amplitude=0.15, frequency=0.01, y_offset= 0.25)
 
 
 

@@ -16,8 +16,8 @@ class vtolAnimation:
                                               # patches and line objects.
 
         plt.axis([-2*V.length,2*V.length, -0.1, 2*V.length]) # Change the x,y axis limits
-        plt.plot([0,5],[0,0],'b--')    # Draw a base line
-        plt.plot([0,0],[0,5],'b--')    # Draw a base line
+        plt.plot([0,10],[0,0],'b--')    # Draw a base line
+        plt.plot([0,0],[0,10],'b--')    # Draw a base line
         plt.xlabel('z(m)')
         plt.ylabel('h(m)')
 
