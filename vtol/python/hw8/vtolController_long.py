@@ -6,7 +6,7 @@ import vtolParam as P0
 from PDControl import PDControl
 
 
-class vtolController:
+class vtolController_long:
 
     def __init__(self):
         # Instantiates the PD object
@@ -21,11 +21,13 @@ class vtolController:
 
         # compute equilibrium force F_e
         F_e = (P0.mc + P0.mr + P0.ml) * P0.g
+        print F_e
         # compute the linearized force using PD
         F_tilde = self.hCtrl.PD(h_r, h, False)
         # compute total force
         F = F_e + F_tilde
-        F = self.saturate(F/2.0)
+        print F
+        F = self.saturate(F)
         return [F]
 
     def saturate(self, u):

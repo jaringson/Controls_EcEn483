@@ -12,7 +12,7 @@ from plotData import plotData
 ballbeam = ballbeamDynamics()
 ctrl = ballbeamController()
 reference = signalGenerator(amplitude=0.01, frequency=0.01, y_offset= 0.25)
-reference = signalGenerator(amplitude=0.01, frequency=0.01)
+
 
 
 # instantiate the simulation plots and animation
@@ -26,7 +26,7 @@ while t < P.t_end:  # main simulation loop
     # Propagate dynamics in between plot samples
     t_next_plot = t + P.t_plot
     while t < t_next_plot: # updates control and dynamics at faster simulation rate
-        u = ctrl.u(ref_input, ballbeam.outputs())  # Calculate the control value
+        u = ctrl.u(ref_input, ballbeam.states())  # Calculate the control value
         ballbeam.propagateDynamics(u)  # Propagate the dynamics
         t = t + P.Ts  # advance time by Ts
     # update animation and data plots

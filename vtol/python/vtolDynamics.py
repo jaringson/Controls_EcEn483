@@ -61,15 +61,15 @@ class vtolDynamics:
         hdot = state.item(4)
         thetadot = state.item(5)
         Fr = u[0]
-        Fl = u[1]
+        Fl = u[1] 
         # The equations of motion.
 
-        M = np.matrix([[1, 0, 0],
-                       [0, 1, 0],
-                       [0, 0, 1]])
-        C = np.matrix([[(-Fr*np.sin(theta)-Fl*np.sin(theta)-self.mu*zdot)/(2*self.m+self.mc)],
-                       [(Fr*np.cos(theta)+Fl*np.cos(theta)-self.mc*self.g+2*self.m*self.g)/(2*self.m+self.mc)],
-                       [(Fr*self.d-Fl*self.d)/(2*self.m*self.d**2+self.Jc)]])
+        M = np.matrix([[2*self.m+self.mc, 0, 0],
+                       [0, 2*self.m+self.mc, 0],
+                       [0, 0, 2*self.m*self.d**2+self.Jc]])
+        C = np.matrix([[(-(Fr+Fl)*np.sin(theta)-self.mu*zdot)],
+                       [(Fr+Fl)*np.cos(theta)-(self.mc+2*self.m)*self.g],
+                       [(Fr-Fl)*self.d]])
         
         tmp = np.linalg.inv(M)*C
         zddot = tmp.item(0)
@@ -85,13 +85,12 @@ class vtolDynamics:
             [z, theta] with added Gaussian noise
         '''
         # re-label states for readability
-        z = self.state.item(0)
-        theta = self.state.item(1)
+        h = self.state.item(1)
+        
         # add Gaussian noise to outputs
-        z_m = z + random.gauss(0, 0.01)
-        theta_m = theta + random.gauss(0, 0.001)
+        h_m = h + random.gauss(0, 0.01)
         # return measured outputs
-        return [z_m, theta_m]
+        return [h_m]
 
     def states(self):
         '''

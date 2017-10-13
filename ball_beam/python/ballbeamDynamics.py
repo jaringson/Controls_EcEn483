@@ -39,8 +39,8 @@ class ballbeamDynamics:
         k3 = self.derivatives(self.state + B.Ts/2*k2, u)
         k4 = self.derivatives(self.state + B.Ts*k3, u)
         self.state += B.Ts/6 * (k1 + 2*k2 + 2*k3 + k4)
-        if self.state[0] > B.l:
-            self.state[0] =  B.l
+        #if self.state[0] > B.l:
+        #    self.state[0] =  B.l
 
     def derivatives(self, state, u):
         '''
@@ -57,7 +57,7 @@ class ballbeamDynamics:
         M = np.matrix([[self.m1, 0],
                        [0, self.m1*z**2+(1/3)*self.m2*self.l**2]])
         C = np.matrix([[self.m1*thetadot**2*z-self.m1*self.g*np.sin(theta)],
-                       [F*self.l*np.cos(theta)-thetadot*2*self.m1*zdot*z-self.m1*self.g*z*np.cos(theta)-self.m2*self.g*(self.l/2)*np.cos(theta)]])
+                       [F*self.l*np.cos(theta)-thetadot*2*self.m1*zdot*z-self.m1*self.g*z*np.cos(theta)-self.m2*self.g*(self.l/2.0)*np.cos(theta)]])
         
         tmp = np.linalg.inv(M)*C
         zddot = tmp.item(0)

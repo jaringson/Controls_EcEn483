@@ -20,9 +20,10 @@ class plotData:
 
         # Instantiate lists to hold the time and data histories
         self.time_history = []  # time
-        self.zref_history = []  # reference position z_r
         self.z_history = []  # position z
+        self.zref_history = []  # reference position z_r
         self.h_history = []  # position h
+        self.href_history = []  # reference position h_r
         self.zt_history = []  # position zt
         self.theta_history = []  # angle theta
         self.ForceR_history = []  # control force
@@ -43,9 +44,11 @@ class plotData:
         '''
         # update the time history of all plot variables
         self.time_history.append(t)  # time
-        self.zref_history.append(reference[0])  # reference base position
+        
         self.z_history.append(states[0])  # base position
+        self.zref_history.append(reference[0][0])  # reference base position
         self.h_history.append(states[1])
+        self.href_history.append(reference[1][0])  # reference base position
         self.theta_history.append(180.0/np.pi*states[2])  # rod angle (converted to degrees)
         self.zt_history.append(states[3])
         self.ForceR_history.append(ctrl[0])  # force on the base
@@ -53,7 +56,7 @@ class plotData:
 
         # update the plots with associated histories
         self.handle[0].updatePlot(self.time_history, [self.z_history, self.zref_history])
-        self.handle[1].updatePlot(self.time_history, [self.h_history])
+        self.handle[1].updatePlot(self.time_history, [self.h_history, self.href_history])
         self.handle[2].updatePlot(self.time_history, [self.theta_history])
         self.handle[3].updatePlot(self.time_history, [self.zt_history])
         self.handle[4].updatePlot(self.time_history, [self.ForceR_history])
