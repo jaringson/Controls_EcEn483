@@ -39,8 +39,8 @@ class ballbeamDynamics:
         k3 = self.derivatives(self.state + B.Ts/2*k2, u)
         k4 = self.derivatives(self.state + B.Ts*k3, u)
         self.state += B.Ts/6 * (k1 + 2*k2 + 2*k3 + k4)
-        #if self.state[0] > B.l:
-        #    self.state[0] =  B.l
+        if self.state[0] > B.l:
+            self.state[0] =  B.l
 
     def derivatives(self, state, u):
         '''

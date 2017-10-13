@@ -22,9 +22,9 @@ M = 10.0              # Time scale separation between inner and outer loop
 zeta_z = 0.707        # Damping Coefficient fop outer loop (z)
 
 # saturation limits
-F_max = 1000             		  # Max Force, N
-error_max = 1        		  # Max step size,m
-theta_max = 180*np.pi/180.0  # Max theta, rads
+F_max = 1000000             		  # Max Force, N
+error_max = 1000        		  # Max step size,m
+theta_max = 720*np.pi/180.0  # Max theta, rads
 
 #---------------------------------------------------
 #                    Inner Loop
@@ -42,8 +42,8 @@ alpha0_th = wn_th**2
 
 # compute gains
 # Delta(s) = s^2 + (a1 + b0*kd)*s + (a0 + b0*kp)
-kp_th = (alpha0_th-a0_th)/b0_th
-kd_th = (alpha1_th-a1_th)/b0_th
+kp_th = (alpha0_th-a0_th)/b0_th 
+kd_th = (alpha1_th-a1_th)/b0_th 
 DC_gain = 1.0 #kp_th/((P.m1+P.m2)*P.g+kp_th)
 
 #---------------------------------------------------
@@ -63,7 +63,7 @@ alpha0_z = wn_z**2
 
 # compute gains
 # Delta(s) = s^2 + (a1 + b0*kd*DC_gain)*s + (a0 + b0*kp*DC_gain)
-kp_z = (alpha0_z-a0_z)/(DC_gain*b0_z)
+kp_z = (alpha0_z-a0_z)/(DC_gain*b0_z) 
 kd_z = (alpha1_z-a1_z)/(DC_gain*b0_z)
 
 print('DC_gain', DC_gain)

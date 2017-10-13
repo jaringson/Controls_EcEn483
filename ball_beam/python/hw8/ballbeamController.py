@@ -20,12 +20,18 @@ class ballbeamController:
         z_r = y_r[0]
         z = y[0]
         theta = y[1]
+        theta_r = y_r[0]
         # the reference angle for theta comes from the outer loop PD control
-        theta_r = self.zCtrl.PD(z_r, z, flag=False)
+        #theta_r_tilde = self.zCtrl.PD(z_r, z, flag=False)
+        #theta_r_e = 0
+        #theta_r = theta_r_e + theta_r_tilde
         # the force applied to the cart comes from the inner loop PD control
-        F_tilde = self.thetaCtrl.PD(theta_r, theta, flag=False)
+        F_tilde = self.thetaCtrl.PD(theta_r, theta, flag=True)
         F_e = P0.m2*P0.g/2
         F = F_e + F_tilde
+
+
+
         return [F]
 
 

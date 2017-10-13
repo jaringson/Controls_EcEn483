@@ -1,23 +1,22 @@
 import sys
 sys.path.append('..')  # add parent directory
 import matplotlib.pyplot as plt
-import ballbeamParam as P
-from ballbeamDynamics import ballbeamDynamics
-from ballbeamController import ballbeamController
+import numpy as np
+import vtolParam as P
+from vtolDynamics import vtolDynamics
+from vtolController import vtolController
 from signalGenerator import signalGenerator
-from ballbeamAnimation import ballbeamAnimation
+from vtolAnimation import vtolAnimation
 from plotData import plotData
 
-# instantiate ballbeam, controller, and reference classes
-ballbeam = ballbeamDynamics()
-ctrl = ballbeamController()
-reference = signalGenerator(amplitude=0.01, frequency=0.01, y_offset= 0.25)
-reference = signalGenerator(amplitude=0.01, frequency=0.01)
-
+# instantiate vtol, controller, and reference classes
+vtol = vtolDynamics()
+ctrl = vtolController()
+reference = signalGenerator(amplitude=1, frequency=2)
 
 # instantiate the simulation plots and animation
 dataPlot = plotData()
-animation = ballbeamAnimation()
+animation = vtolAnimation()
 
 t = P.t_start  # time starts at t_start
 while t < P.t_end:  # main simulation loop
@@ -26,12 +25,12 @@ while t < P.t_end:  # main simulation loop
     # Propagate dynamics in between plot samples
     t_next_plot = t + P.t_plot
     while t < t_next_plot: # updates control and dynamics at faster simulation rate
-        u = ctrl.u(ref_input, ballbeam.outputs())  # Calculate the control value
-        ballbeam.propagateDynamics(u)  # Propagate the dynamics
+        u = ctrl.u(ref_input, vtol.outputs())  # Calculate the control value
+        vtol.propagateDynamics(u)  # Propagate the dynamics
         t = t + P.Ts  # advance time by Ts
     # update animation and data plots
-    animation.drawBallbeam(ballbeam.states())
-    dataPlot.updatePlots(t, ref_input, ballbeam.states(), u)
+    animation.drawVtol(vtol.states())
+    dataPlot.updatePlots(t, ref_input, vtol.states(), u)
     plt.pause(0.0001)  # the pause causes the figure to be displayed during the simulation
 
 # Keeps the program from closing until the user presses a button.
