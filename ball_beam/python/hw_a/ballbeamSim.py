@@ -10,7 +10,7 @@ from plotData import plotData
 
 # instantiate reference input classes
 reference = signalGenerator(amplitude=0.5, frequency=0.1)
-zRef = signalGenerator(amplitude=0.5, frequency=0.7, y_offset=0.5) 
+zRef = signalGenerator(amplitude=0.5, frequency=0.7, y_offset=0.4) 
 thetaRef = signalGenerator(amplitude=np.pi/2, frequency=0.1)
 fRef = signalGenerator(amplitude=5, frequency=.5)
 

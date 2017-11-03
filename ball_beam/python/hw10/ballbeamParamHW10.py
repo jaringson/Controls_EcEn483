@@ -16,14 +16,14 @@ beta = (2 * sigma - Ts) / (2 * sigma + Ts)  # dirty derivative gain
 #       PD Control: Time Design Strategy
 ####################################################
 # tuning parameters
-tr_z = 4.0          # Rise time for inner loop (theta)
+tr_z = 4.0         # Rise time for inner loop (theta)
 zeta_th = 0.707       # Damping Coefficient for inner loop (theta)
-M = 10.0              # Time scale separation between inner and outer loop
+M = 6.0              # Time scale separation between inner and outer loop
 zeta_z = 0.707        # Damping Coefficient fop outer loop (z)
-ki_z = 0.0001    # select integrator gain
+ki_z = -1   # select integrator gain
 
 # saturation limits
-F_max = 15             		  # Max Force, N
+F_max = 1000000             		  # Max Force, N
 theta_max = 5*np.pi/180.0  # Max theta, rads
 
 #---------------------------------------------------

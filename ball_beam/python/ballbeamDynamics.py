@@ -21,7 +21,7 @@ class ballbeamDynamics:
         # that represents alpha*100 % of the parameter, i.e., alpha = 0.2, means that the parameter
         # may change by up to 20%.  A different parameter value is chosen every time the simulation
         # is run.
-        alpha = 0.2  # Uncertainty parameter
+        alpha = 0.01  # Uncertainty parameter
         self.m1 = B.m1 * (1+2*alpha*np.random.rand()-alpha)  # Mass of the pendulum, kg
         self.m2 = B.m2 * (1+2*alpha*np.random.rand()-alpha)  # Mass of the cart, kg
         self.l = B.l * (1+2*alpha*np.random.rand()-alpha)  # Length of the rod, m
@@ -53,6 +53,8 @@ class ballbeamDynamics:
         thetadot = state.item(3)
         F = u[0]
         # The equations of motion.
+
+        #print theta
 
         M = np.matrix([[self.m1, 0],
                        [0, self.m1*z**2+(1/3)*self.m2*self.l**2]])

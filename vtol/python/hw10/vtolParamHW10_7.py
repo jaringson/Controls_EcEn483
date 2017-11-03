@@ -17,12 +17,12 @@ wn = 2.2 / tr
 zeta = .707
 kp = 2*zeta*wn*(2*P.m+P.mc)
 kd = wn**2*(2*P.m+P.mc)
-ki = 0.001
+ki = 0.01
 
 
 
 print('kp: ', kp)
+print('ki: ', ki)
 print('kd: ', kd)
-
 
 
