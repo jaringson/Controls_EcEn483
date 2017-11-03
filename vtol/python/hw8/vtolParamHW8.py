@@ -56,7 +56,7 @@ a0_z = 0.0
 
 # coefficients for desired outer loop
 # Delta_des(s) = s^2 + alpha1*s + alpha0 = s^2 + 2*zeta*wn*s + wn^2
-tr_z = M*tr_th  # desired rise time, s
+tr_z = 3#M*tr_th  # desired rise time, s
 wn_z = 2.2/tr_z  # desired natural frequency
 alpha1_z = 2.0*zeta_z*wn_z
 alpha0_z = wn_z**2
