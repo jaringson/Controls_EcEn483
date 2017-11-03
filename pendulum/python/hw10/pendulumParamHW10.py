@@ -15,9 +15,9 @@ beta = (2 * sigma - Ts) / (2 * sigma + Ts)  # dirty derivative gain
 ####################################################
 #       PD Control: Time Design Strategy
 ####################################################
-tr_z = 2           # rise time for outer loop   - Can't really push saturation limits and remain stable.
+tr_z = 2.0           # rise time for outer loop   - Can't really push saturation limits and remain stable.
 zeta_z   = 0.707   # damping ratio for outer loop
-M = 8              # time scale separation between inner and outer loop
+M = 8.0              # time scale separation between inner and outer loop
 zeta_th  = 0.707   # damping ratio for inner loop
 ki_z = 0.0001    # select integrator gain
 
