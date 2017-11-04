@@ -7,6 +7,7 @@ import pendulumParam as P
 
 # sample rate of the controller
 Ts = P.Ts
+print 'ehrasdfash'
 
 # dirty derivative parameters
 sigma = 0.05  # cutoff freq for dirty derivative
@@ -16,9 +17,9 @@ beta = (2 * sigma - Ts) / (2 * sigma + Ts)  # dirty derivative gain
 #       PD Control: Time Design Strategy
 ####################################################
 # tuning parameters
-tr_th = 0.35          # Rise time for inner loop (theta)
+tr_th = 0.25          # Rise time for inner loop (theta)
 zeta_th = 0.707       # Damping Coefficient for inner loop (theta)
-M = 20.0              # Time scale separation between inner and outer loop
+M = 8.0              # Time scale separation between inner and outer loop
 zeta_z = 0.707        # Damping Coefficient fop outer loop (z)
 
 # saturation limits
@@ -57,6 +58,8 @@ a0_z = 0
 # coefficients for desired outer loop
 # Delta_des(s) = s^2 + alpha1*s + alpha0 = s^2 + 2*zeta*wn*s + wn^2
 tr_z = M*tr_th  # desired rise time, s
+print tr_z
+print 'here'
 wn_z = 2.2/tr_z  # desired natural frequency
 alpha1_z = 2.0*zeta_z*wn_z
 alpha0_z = wn_z**2
@@ -72,5 +75,10 @@ print('kd_th: ', kd_th)
 print('kp_z: ', kp_z)
 print('kd_z: ', kd_z)
 
+('DC_gain', 3.480371900826446)
+('kp_th: ', -17.18877551020408)
+('kd_th: ', -1.111)
+('kp_z: ', 0.01158397318619963)
+('kd_z: ', 0.04625356037339247)
 
 

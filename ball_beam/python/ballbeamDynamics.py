@@ -21,10 +21,10 @@ class ballbeamDynamics:
         # that represents alpha*100 % of the parameter, i.e., alpha = 0.2, means that the parameter
         # may change by up to 20%.  A different parameter value is chosen every time the simulation
         # is run.
-        alpha = 0.01  # Uncertainty parameter
-        self.m1 = B.m1 * (1+2*alpha*np.random.rand()-alpha)  # Mass of the pendulum, kg
-        self.m2 = B.m2 * (1+2*alpha*np.random.rand()-alpha)  # Mass of the cart, kg
-        self.l = B.l * (1+2*alpha*np.random.rand()-alpha)  # Length of the rod, m
+        alpha = 0.2  # Uncertainty parameter
+        self.m1 = B.m1 * (1+2*alpha*1-alpha)  # Mass of the pendulum, kg
+        self.m2 = B.m2 * (1+2*alpha*1-alpha)  # Mass of the cart, kg
+        self.l = B.l * (1+2*alpha*1-alpha)  # Length of the rod, m
         self.g = B.g  # the gravity constant is well known and so we don't change it.
 
     def propagateDynamics(self, u):
@@ -56,15 +56,26 @@ class ballbeamDynamics:
 
         #print theta
 
-        M = np.matrix([[self.m1, 0],
-                       [0, self.m1*z**2+(1/3)*self.m2*self.l**2]])
-        C = np.matrix([[self.m1*thetadot**2*z-self.m1*self.g*np.sin(theta)],
-                       [F*self.l*np.cos(theta)-thetadot*2*self.m1*zdot*z-self.m1*self.g*z*np.cos(theta)-self.m2*self.g*(self.l/2.0)*np.cos(theta)]])
+        # M = np.matrix([[self.m1, 0],
+        #                [0, self.m1*z**2+(1/3)*self.m2*self.l**2]])
+        # C = np.matrix([[self.m1*thetadot**2*z-self.m1*self.g*np.sin(theta)],
+        #                [F*self.l*np.cos(theta)-thetadot*2*self.m1*zdot*z-self.m1*self.g*z*np.cos(theta)-self.m2*self.g*(self.l/2.0)*np.cos(theta)]])
         
-        tmp = np.linalg.inv(M)*C
-        zddot = tmp.item(0)
-        thetaddot = tmp.item(1)
+        # tmp = np.linalg.inv(M)*C
+        # zddot = tmp.item(0)
+        # thetaddot = tmp.item(1)
+
+        
         # build xdot and return
+
+        zddot = (1/self.m1)*(self.m1*z*thetadot**2 - self.m1*self.g*np.sin(theta))
+        a = ((self.m2*self.l**2)/3) + self.m1*z**2
+        b = (self.m2*self.g*self.l)/2
+        # thetaddot = (1/a)*(-2*self.m1*z*zdot*thetadot 
+        #     - self.m1*self.g*z*np.cos(theta) 
+        #     - b*np.cos(theta)  
+        #     + self.l*F*np.cos(theta))
+        thetaddot = 1/(self.m2*self.l**2/3 + self.m1*z**2)*(-2*self.m1*z*zdot*thetadot - self.m1*self.g*z*np.cos(theta) - self.m2*self.g/2*self.l*np.cos(theta) + self.l*F*np.cos(theta))
         xdot = np.matrix([[zdot], [thetadot], [zddot], [thetaddot]])
         return xdot
 
@@ -77,8 +88,8 @@ class ballbeamDynamics:
         z = self.state.item(0)
         theta = self.state.item(1)
         # add Gaussian noise to outputs
-        z_m = z + random.gauss(0, 0.01)
-        theta_m = theta + random.gauss(0, 0.001)
+        z_m = z #+ random.gauss(0, 0.01)
+        theta_m = theta #+ random.gauss(0, 0.001)
         # return measured outputs
         return [z_m, theta_m]
 

@@ -8,6 +8,7 @@ class pendulumController:
 
     def __init__(self):
         # Instantiates the SS_ctrl object
+        print 'controller'
         self.zCtrl = PDControl(P.kp_z, P.kd_z, P.theta_max, P.beta, P.Ts)
         self.thetaCtrl = PDControl(P.kp_th, P.kd_th, P.F_max, P.beta, P.Ts)
 

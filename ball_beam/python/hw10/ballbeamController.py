@@ -13,7 +13,7 @@ class ballbeamController:
     def __init__(self):
         # Instantiates the SS_ctrl object
         self.zCtrl = PIDControl(P.kp_z, P.ki_z, P.kd_z, P.F_max, P.beta, P.Ts)
-        self.thetaCtrl = PIDControl(P.kp_th, 0.0, P.kd_th, P.theta_max, P.beta, P.Ts)
+        self.thetaCtrl = PIDControl(P.kp_th, P.ki_th, P.kd_th, P.theta_max, P.beta, P.Ts)
         self.limit = P.F_max
 
     def u(self, y_r, y):
@@ -24,17 +24,15 @@ class ballbeamController:
         theta = y[1]
         
         # the reference angle for theta comes from the outer loop PD control
-        theta_r_tilda = self.zCtrl.PID(z_r, z, flag=False)
-        theta_r_e = 0
-        theta_r = theta_r_e + theta_r_tilda
+        theta_r = self.zCtrl.PID(z_r, z, flag=False)
 
         # the force applied to the cart comes from the inner loop PD control
-        F_tilda = self.thetaCtrl.PD(theta_r, theta, flag=False)
-        F_e = (P0.m1*P0.g*z/ P0.l) + P0.m2*P0.g/2
+        F_tilda = self.thetaCtrl.PID(theta_r, theta, flag=False)
+        F_e = P0.m1*P0.g*(z/ P0.l) + P0.m2*P0.g/2 +2
         F = F_e + F_tilda
 
 
-        F = self.saturate(F)
+        #F = self.saturate(F)
         return [F]
 
     def saturate(self, u):

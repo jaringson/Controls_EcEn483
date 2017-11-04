@@ -5,7 +5,7 @@ import control as cnt
 # Physical parameters of the inverted pendulum known to the controller
 m1 = 0.35     # Mass of the ball, kg
 m2 = 2.0      # Mass of the beam, kg
-g = 9.8       # Gravity, m/s**2
+g = 9.81       # Gravity, m/s**2
 l = 0.5  # Length of beam m
 ell = 0.5  # Length of beam m
 
@@ -13,8 +13,8 @@ ell = 0.5  # Length of beam m
 radius = 0.06 # Radius of circular part of pendulum
 
 # Initial Conditions
-z0 = 0.1                # ,m
-theta0 = 0*np.pi/180  # ,rads
+z0 = l/2.0                # ,m
+theta0 = 0.0*np.pi/180  # ,rads
 zdot0 = 0.0             # ,m/s
 thetadot0 = 0.0         # ,rads/s
 

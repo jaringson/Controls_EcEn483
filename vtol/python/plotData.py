@@ -50,7 +50,7 @@ class plotData:
         self.h_history.append(states[1])
         self.href_history.append(reference[1][0])  # reference base position
         self.theta_history.append(180.0/np.pi*states[2])  # rod angle (converted to degrees)
-        self.zt_history.append(states[3])
+        self.zt_history.append(0)
         self.ForceR_history.append(ctrl[0])  # force on the base
         self.ForceL_history.append(ctrl[1])  # force on the base
 

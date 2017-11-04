@@ -31,6 +31,7 @@ theta_max = 30.0*np.pi/180.0   # Max theta, rads
 # ---------------------------------------------------
 # gains for inner loop
 tr_theta = tr_z/M  # rise time for inner loop
+print tr_theta
 wn_th = 2.2/tr_theta  # natural frequency for inner loop
 kp_th = -(P.m1+P.m2)*P.g - P.m2*P.ell/2*wn_th**2  # kp - inner loop
 kd_th = -zeta_th*wn_th*P.m2*P.ell  # kd - inner loop
@@ -54,4 +55,9 @@ print('ki_z: ', ki_z)
 print('kd_z: ', kd_z)
 
 
-
+('DC_gain', 1.6327479338842974)
+('kp_th: ', -31.610000000000003)
+('kd_th: ', -3.1108000000000002)
+('kp_z: ', 0.0756206057240992)
+('ki_z: ', 0.0001)
+('kd_z: ', 0.09720685135806933)

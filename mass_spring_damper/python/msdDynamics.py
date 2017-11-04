@@ -22,7 +22,7 @@ class msdDynamics:
         # is run.
         alpha = 0.2  # Uncertainty parameter
         self.m = S.m * (1+2*alpha*np.random.rand()-alpha)  # Mass of the cart, kg
-        self.ell = S.ell * (1+2*alpha*np.random.rand()-alpha)  # Length of the rod, m
+        self.ell = S.ell #* (1+2*alpha*np.random.rand()-alpha)  # Length of the rod, m
         self.b = S.b * (1+2*alpha*np.random.rand()-alpha)  # Damping coefficient, Ns
         self.g = S.g  # the gravity constant is well known and so we don't change it.
         self.k = S.k * (1+2*alpha*np.random.rand()-alpha) # K spring constant 
