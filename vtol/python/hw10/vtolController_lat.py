@@ -24,7 +24,7 @@ class vtolController_lat:
         theta = y[2]
         
         # the reference angle for theta comes from the outer loop PD control
-        theta_r_tilde = self.zCtrl.PID(z_r, z, flag=False)
+        theta_r_tilde = self.zCtrl.PD(z_r, z, flag=False)
         theta_r_e = 0
         theta_r = theta_r_e + theta_r_tilde
 

@@ -42,8 +42,8 @@ while t < P.t_end:  # main simulation loop
         Fl = (u_F[0]/2.0) - ((1.0 / (2*P.d)) * u_tau[0]) 
         Fr = saturate_F(Fr, 10)
         Fl = saturate_F(Fl, 10)
-        print [Fr,Fl]
-        vtol.propagateDynamics([Fr,Fl])  # Propagate the dynamics
+        # print np.array([Fr.tolist()[0][0],Fl.tolist()[0][0]])
+        vtol.propagateDynamics(np.array([Fr.tolist()[0][0],Fl.tolist()[0][0]]))  # Propagate the dynamics
         t = t + P.Ts  # advance time by Ts
     # update animation and data plots
     animation.drawVtol(vtol.states())

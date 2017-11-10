@@ -25,10 +25,12 @@ class vtolController_long:
         F_tilde = self.hCtrl.PD(h_r, h, False)
         # compute total force
         F = F_e + F_tilde
-        F = self.saturate(F)
+        ### Saturate in SIM File ###
+        # F = self.saturate(F)
         return [F]
 
     def saturate(self, u):
+        print self.limit
         if abs(u) > self.limit:
             u = self.limit*np.sign(u)
         return u

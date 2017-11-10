@@ -22,7 +22,7 @@ class vtolController_long:
         # compute equilibrium force F_e
         F_e = (P0.mc + P0.mr + P0.ml) * P0.g
         # compute the linearized force using PD
-        F_tilde = self.hCtrl.PID(h_r, h, False)
+        F_tilde = self.hCtrl.PD(h_r, h, False)
         # compute total force
         F = F_e + F_tilde
         F = self.saturate(F)

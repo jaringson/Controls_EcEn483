@@ -13,7 +13,7 @@ ell = 0.5  # Length of beam m
 radius = 0.06 # Radius of circular part of pendulum
 
 # Initial Conditions
-z0 = l/2.0                # ,m
+z0 = 0.0                # ,m
 theta0 = 0.0*np.pi/180  # ,rads
 zdot0 = 0.0             # ,m/s
 thetadot0 = 0.0         # ,rads/s

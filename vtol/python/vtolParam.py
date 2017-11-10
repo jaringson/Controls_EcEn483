@@ -6,13 +6,13 @@ import control as cnt
 mr = 0.25     # Mass of the right prop, kg
 ml = 0.25      # Mass of the left prop, kg
 m = 0.25 		# Mass if left and right prop equal, kg
-g = 9.8       # Gravity, m/s**2
+g = 9.81       # Gravity, m/s**2
 mu = 0.1      # Viscous drag, kg/s
 length = .2	
 width = .2
 Jc = .0042 	# Inertia kg m**2
 d = 0.3      # Distance from vtol body to props, m
-mc = 1 		# mass of the vtol body, kg
+mc = 1.0 		# mass of the vtol body, kg
 
 # parameters for animation
 w = 0.15       # Width of the cart, m
@@ -40,5 +40,5 @@ sigma = 0.05  # cutoff freq for dirty derivative
 beta = (2.0*sigma-Ts)/(2.0*sigma+Ts)  # dirty derivative gain
 
 # saturation limits
-F_max = 10.0                # Max Force, N
+F_max = 20.0                # Max Force, N
 

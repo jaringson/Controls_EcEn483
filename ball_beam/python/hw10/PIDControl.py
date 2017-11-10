@@ -95,8 +95,8 @@ class PIDControl:
 
     def integratorAntiWindup(self, u_sat, u_unsat):
          # integrator anti - windup
-         if self.ki != 0.0 and abs(self.error_dot) < 0.001:
-            self.integrator = self.integrator + self.Ts/self.ki*(u_sat-u_unsat)
+         if self.ki != 0.0:
+            self.integrator = self.integrator + self.Ts/self.ki*(u_sat-u_unsat);
 
     def saturate(self,u):
         if abs(u) > self.limit:

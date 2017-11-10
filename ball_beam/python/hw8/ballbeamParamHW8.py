@@ -22,7 +22,7 @@ M = 10.0              # Time scale separation between inner and outer loop
 zeta_z = 0.707        # Damping Coefficient fop outer loop (z)
 
 # saturation limits
-F_max = 15             		  # Max Force, N
+F_max = 15           		  # Max Force, N
 error_max = 1        		  # Max step size,m
 theta_max = 5*np.pi/180.0  # Max theta, rads
 

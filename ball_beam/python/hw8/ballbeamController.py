@@ -30,7 +30,7 @@ class ballbeamController:
 
         # the force applied to the cart comes from the inner loop PD control
         F_tilde = self.thetaCtrl.PD(theta_r, theta, flag=False)
-        F_e = (P0.m1*P0.g*z/ P0.l) + P0.m2*P0.g/2
+        F_e = (P0.m1*P0.g*z*1.0/ P0.l) + P0.m2*P0.g/2.0
         F = F_e + F_tilde
 
 
