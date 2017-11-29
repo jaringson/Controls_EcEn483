@@ -62,6 +62,9 @@ class vtolDynamics:
         thetadot = state.item(5)
         Fr = u[0]
         Fl = u[1] 
+
+        wind_force = 0.1 # Newtons
+
         # The equations of motion.
 
         M = np.matrix([[2*self.m+self.mc, 0, 0],
@@ -76,7 +79,7 @@ class vtolDynamics:
         hddot = tmp.item(1)
         thetaddot = tmp.item(2)
         # build xdot and return
-        xdot = np.matrix([[zdot], [hdot], [thetadot], [zddot], [hddot], [thetaddot], [V.zt0]])
+        xdot = np.matrix([[zdot+wind_force], [hdot], [thetadot], [zddot], [hddot], [thetaddot], [V.zt0]])
         return xdot
 
     def outputs(self):
