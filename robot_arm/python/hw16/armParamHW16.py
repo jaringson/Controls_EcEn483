@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 th_e = 0;
 Plant = tf([2.0/P.m/P.ell**2],
            [1, 2.0*P.b/P.m/P.ell**2, -3.0*P.g*np.sin(th_e)/2/P.ell])
+print Plant
 
 # Compute transfer function of controller
 C_pid = tf([(P10.kd+P10.kp*P.sigma), (P10.kp+P10.ki*P.sigma), P10.ki],
@@ -22,8 +23,8 @@ C_pid = tf([(P10.kd+P10.kp*P.sigma), (P10.kp+P10.ki*P.sigma), P10.ki],
 
 # display bode plots of transfer functions
 plt.figure(3), plt.clf, plt.hold(True), plt.grid(True)
-cnt.matlab.bode(Plant, Plant*C_pid, dB=True)
-#plt.legend('No control', 'PID')
+cnt.matlab.bode(Plant*C_pid, 1+Plant*C_pid, dB=True)
+plt.legend(['No control', 'PID'])
 plt.title('Single Link Arm')
 
 

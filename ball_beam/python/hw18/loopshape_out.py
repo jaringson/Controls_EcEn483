@@ -1,13 +1,13 @@
 import sys
 sys.path.append('..')  # add parent directory
-import pendulumParam as P
+import ballbeamParam as P
 import matplotlib.pyplot as plt
 from control import TransferFunction as tf
 import control as cnt
 import numpy as np
 import loopshape_in as L_in
 
-P_out = tf([P.g], [1, 0, 0])
+P_out = tf([-P.g], [1, 0, 0])
 
 # construct plant as cascade of P_out and closed inner loop
 Plant = tf.minreal(P_out*(L_in.P_in*L_in.C/(1+L_in.P_in*L_in.C)))
@@ -28,15 +28,15 @@ if PLOT:
 #########################################
 
 #----------- general tracking specification --------
-omega_r = 0.01    # track signals below this frequency
-gamma_r = 0.0001    # tracking error below this value
+omega_r = 0.1    # track signals below this frequency
+gamma_r = 0.01    # tracking error below this value
 w = np.logspace(np.log10(omega_r) - 2, np.log10(omega_r))
 if PLOT:
     plt.subplot(2, 1, 1)
     trackPlot, = plt.plot(w, 20*np.log10(1/gamma_r)*np.ones(len(w)), color='g', label='tracking spec')
 
 #----------- noise specification --------
-omega_n = 400    # attenuate noise above this frequency
+omega_n = 100    # attenuate noise above this frequency
 gamma_n = 0.001    # attenuate noise by this amount
 w = np.logspace(np.log10(omega_n), np.log10(omega_n)+2)
 if PLOT:
@@ -50,10 +50,14 @@ if PLOT:
 
 C = tf([1], [1])
 
+# Proportional control: correct for negative sign in plant 
+K = tf([-10000], [1])
+C = C*K
+
 #  phase lead: increase PM (stability)
 # At desired crossover frequency, PM = -3
 # Add 70 deg of PM with lead
-w_max = 1.1  #location of maximum frequency bump (desired crossover)
+w_max = 3.0  #location of maximum frequency bump (desired crossover)
 phi_max = 70*np.pi/180
 M = (1 + np.sin(phi_max))/(1 - np.sin(phi_max))  # lead ratio
 z = w_max/np.sqrt(M)
@@ -61,10 +65,13 @@ p = w_max*np.sqrt(M)
 Lead = tf([1/z, 1], [1/p, 1])
 C = C*Lead
 
+
+
 # find gain to set crossover at w_max = 1.1 rad/s
 mag, phase, omega = cnt.bode(Plant*C, dB=False, omega=[w_max], Plot=False)
 K = tf([1/mag.item(0)], [1])
 C = K*C
+
 
 # Tracking constraint not satisfied -- add lag compensation to boost low-frequency gain
 
@@ -72,19 +79,22 @@ C = K*C
 mag, phase, omega = cnt.bode(Plant*C, dB=True, omega=[omega_r], Plot=False)
 gain_increase_needed = 1/gamma_r/mag.item(0)
 # minimum gain increase at low frequencies is 4.8 let lag ratio be 8.
-M = 8
+M = 9
 p = omega_r # set pole at omega_r
 z = M*p # set zero at M*omega_r
 Lag = tf([M/z, M], [1/p, 1])
 C = C*Lag
 
+
+
 # Noise attenuation constraint not quite satisfied
 # can be satisfied by reducing gain at 400 rad/s by a factor of 2
 # Use a low-pass filter
-m = 0.5 #attenuation factor
+m = 0.9 #attenuation factor
 a = m*omega_n*np.sqrt(1/(1-m**2))
 lpf = tf([a],[1,a])
 C = lpf*C
+
 
 ############################################
 #  Prefilter Design
